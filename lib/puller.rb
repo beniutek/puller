@@ -1,5 +1,3 @@
-require 'mime/types'
-require 'net/http'
 require 'rest-client'
 
 class Puller
