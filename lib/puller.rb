@@ -15,14 +15,16 @@ class Puller
     raise BadParamError if [title, head, base].map(&:empty?).any?
 
     params = {
-      title: title,
-      head: head,
-      base: base,
-      body: body,
-      maintainer_can_modify: true,
+      "title": title,
+      "head": head,
+      "base": base,
+      "body": body,
+      "maintainer_can_modify": true,
     }
 
     RestClient.post(url, params, headers)
+  rescue RestClient::ExceptionWithResponse => e
+    e.response
   end
 
   private
