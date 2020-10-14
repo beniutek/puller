@@ -21,6 +21,10 @@ describe Puller do
   let(:puller) { described_class.new(owner, repo) }
   let(:ok_response) { 'ok' }
 
+  before do
+    allow(RestClient).to receive(:post).and_return(nil)
+  end
+
   describe '#create_pull_request' do
     context 'when params are ok' do
       before do
@@ -39,6 +43,9 @@ describe Puller do
     end
 
     context 'when one param is an empty string' do
+      it 'raises an error' do
+        expect { puller.create_pull_request('title', 'head', '', 'body') }.to raise_error(Puller::BadParamError)
+      end
     end
   end
 end

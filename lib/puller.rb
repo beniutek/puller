@@ -6,6 +6,7 @@ class Puller
   attr_reader :repo, :owner
 
   BadParamError = Class.new(StandardError)
+
   def initialize(owner, repo)
     @repo = repo
     @owner = owner
@@ -13,6 +14,7 @@ class Puller
 
   def create_pull_request(title, head, base, body = nil)
     raise BadParamError unless title && head && base
+    raise BadParamError if [title, head, base].map(&:empty?).any?
 
     params = {
       title: title,
